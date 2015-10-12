@@ -1,0 +1,11 @@
+#測試python的AES加密
+from Crypto.Cipher import AES
+obj = AES.new('test')
+message = "AES test"
+ciphertext = obj.encrypt(message)
+print ciphertext
+
+建立Arduino的開發環境，安裝Linkit One驅動
+測試基本的閃爍LED正常
+試著AES加密函件庫使用失敗
+https://github.com/DavyLandman/AESLib
