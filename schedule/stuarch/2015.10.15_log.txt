@@ -1,0 +1,50 @@
+//arduino-aes-test.ino
+//Arduino上的AES加密解密
+#include <AESLib.h>
+void setup() 
+{
+  Serial.begin(9600);
+}
+void loop() 
+{
+  uint8_t key[] = "0123456789012345";
+  char data[] = "0123456789abcdef"; 
+  aes128_cbc_enc(key, key, data, 16);
+  Serial.println(data);
+  aes128_cbc_dec(key, key, data, 16);
+  Serial.println(data);
+  delay(2000);
+}
+
+//arduino-nfc-read.ino
+//Arduino讀取NFC後輸出到Serial Port
+#include <SPI.h>
+#include "PN532_SPI.h"
+#include "PN532.h"
+#include "NfcAdapter.h"
+PN532_SPI interface(SPI, 10);
+NfcAdapter nfc = NfcAdapter(interface);
+void setup(void) {
+    Serial.begin(9600);
+    nfc.begin();
+}
+void loop(void) 
+{
+    if (nfc.tagPresent())
+    { 
+        NfcTag tag = nfc.read();
+        String scannedUID = tag.getUidString();
+        Serial.println("UID=" + scannedUID);
+    }
+    delay(500); 
+}
+
+"""
+pc-read-serial.py
+用Python在PC端讀取Serial輸出之內容
+"""
+import serial
+ser = serial.Serial('/dev/ttyACM0',9600) #/dev/ttyAMC0為裝置
+while True:
+    print(ser.readline())
+
